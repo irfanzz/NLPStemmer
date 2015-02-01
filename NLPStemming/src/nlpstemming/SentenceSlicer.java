@@ -24,6 +24,7 @@ public class SentenceSlicer {
         currentSentence = new ArrayList<>();
         listSentence.add(currentSentence);
         
+        //test
         for (int i = 0; i < arrayInput.length; i++) {
             String word = arrayInput[i];
             if (isEndingWithEndMark(word)){//
