@@ -6,6 +6,7 @@ package nlpstemming.view;
 
 import java.util.ArrayList;
 import nlpstemming.Dictionary.ArrayDictionary;
+import nlpstemming.Marks;
 import nlpstemming.SentenceSlicer;
 import nlpstemming.Stemmer;
 import nlpstemming.tools;
@@ -34,14 +35,16 @@ public class ViewOutput extends javax.swing.JFrame {
             ArrayDictionary dictionary = new ArrayDictionary(words);
             Stemmer stemmer    = new Stemmer(dictionary);
             for (int i = 0; i < output.size(); i++) {
-                ArrayList<String> arrayList = output.get(i);
+                ArrayList<String> sentenceInput = output.get(i);
+                Marks marks = new Marks(sentenceInput);
+                ArrayList<String> tokenizeList = marks.getSentence();
                 if (i > 0){
                     sb.append("\n\nSentence ").append(i).append(":\n");
                 }else{
                     sb.append("Sentence ").append(i).append(":\n");
                 }
-                for (int j = 0; j < arrayList.size(); j++) {
-                    String string = arrayList.get(j);
+                for (int j = 0; j < tokenizeList.size(); j++) {
+                    String string = tokenizeList.get(j);
                     if (j==0){
                         sb.append(string);
                     }else{
@@ -49,8 +52,8 @@ public class ViewOutput extends javax.swing.JFrame {
                     }
                 }
                 sb.append("\nSTEMMING WORD : ");
-                for (String string : arrayList) {
-                    sb.append("\n").append(string).append(" : ").append(stemmer.stem(string));
+                for (String string : tokenizeList) {
+                    sb.append("\n").append(string).append(" =:= ").append(stemmer.stem(string));
                 }
             }
             jTextArea1.setText(sb.toString());
