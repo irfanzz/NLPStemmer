@@ -52,7 +52,7 @@ public class tools {
     
     public static String[] getWordsFromFile() throws FileNotFoundException
     {
-        String content = new Scanner(new File("src/asset/kata-dasar.txt")).useDelimiter("\\Z").next();
+        String content = new Scanner(new File("kata-dasar.txt")).useDelimiter("\\Z").next();
         
 
         return content.split("\n");
@@ -61,7 +61,7 @@ public class tools {
     
     public static String[] getRulesFromFile() throws FileNotFoundException
     {
-        String content = new Scanner(new File("src/asset/rule-ambiguitas.txt")).useDelimiter("\\Z").next();
+        String content = new Scanner(new File("rule-ambiguitas.txt")).useDelimiter("\\Z").next();
         
 
         return content.split("\n");
