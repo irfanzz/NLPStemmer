@@ -3,13 +3,12 @@
  * and open the template in the editor.
  */
 package nlpstemming;
-
 import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import sun.misc.IOUtils;
 
 /**
  *
@@ -19,38 +18,42 @@ public class Tokenizer {
     ArrayList<String> input;
     String [] frasa;
     String current, next;
-    ArrayList<String> currentSentence;
-    String filename;
+    ArrayList<String> currentSentence = new ArrayList<String>();
+    String filename, filename1;
     //constructor dgn input arraylist string (utk satu kalimat)  
     //disimpan di variabel (currentSentence)
     //panggil dengan 
     
     public Tokenizer(ArrayList<String> in) throws IOException{
-        
         input = in;
         int i =0;
-        filename ="";
-        while (i<=input.size()-2)
+        URL location = Tokenizer.class.getProtectionDomain().getCodeSource().getLocation();
+        filename1 = "";
+        
+while (i<=input.size()-2)
         {
             current = input.get(i).toLowerCase();
             next = input.get(i+1).toLowerCase();
             
+            filename ="";
+            
             if (current.startsWith("a") || current.startsWith("b") || current.startsWith("c"))
-                filename = ("frasaAC.txt");
+                filename = (filename1+"frasaAC.txt");
             else if (current.startsWith("d") || current.startsWith("e") || current.startsWith("f"))
-                filename = ("frasaDI.txt");
+                filename = (filename1+"frasaDI.txt");
             else if (current.startsWith("g") || current.startsWith("h") || current.startsWith("i"))
-                filename = ("frasaDI.txt");
+                filename = (filename1+"frasaDI.txt");
             else if (current.startsWith("j") || current.startsWith("k") || current.startsWith("l"))
-                filename = ("frasaJL.txt");
+                filename = (filename1+"frasaJL.txt");
             else if (current.startsWith("m") || current.startsWith("n") || current.startsWith("o"))
-                filename = ("frasaMR.txt");
+                filename = (filename1+"frasaMR.txt");
             else if (current.startsWith("p") || current.startsWith("q") || current.startsWith("r"))
-                filename = ("frasaMR.txt");
+                filename = (filename1+"frasaMR.txt");
             else if (current.startsWith("s") || current.startsWith("t") || current.startsWith("u")|| current.startsWith("v"))    
-                filename = ("frasaSZ.txt");            
+                filename = (filename1+"frasaSZ.txt");            
             else if (current.startsWith("w") || current.startsWith("x") || current.startsWith("y")|| current.startsWith("x"))    
-                filename = ("frasaSZ.txt");
+                filename = (filename1+"frasaSZ.txt");
+        
             
             if (filename.length() > 1)
             {    
@@ -67,7 +70,7 @@ public class Tokenizer {
                         break;
                     }    
                     else    
-                        j = j+2;
+                        j = j+1;
                 }
             
                 if (j>=frasa.length-2)          
@@ -77,7 +80,7 @@ public class Tokenizer {
                 currentSentence.add(current);
             
             i=i+1;
-        }//endwhile
+        }//endwhile               
 
         
         
@@ -88,21 +91,27 @@ public class Tokenizer {
     }
     
     
-    public static String readFile(String fileName) throws IOException {
-    BufferedReader br = new BufferedReader(new FileReader(fileName));
+    public static String readFile(String fn) throws IOException {
+    String s="";
     try {
-        StringBuilder sb = new StringBuilder();
-        String line = br.readLine();
-
-        while (line != null) {
-            sb.append(line);
-            sb.append("\n");
-            line = br.readLine();
-        }
-        return sb.toString();
-    } finally {
-        br.close();
+	File file = new File(fn);
+        FileReader fileReader = new FileReader(file);
+    	BufferedReader bufferedReader = new BufferedReader(fileReader);
+	StringBuffer stringBuffer = new StringBuffer();
+	String line;
+	while ((line = bufferedReader.readLine()) != null) {
+        	stringBuffer.append(line);
+                stringBuffer.append(" ");
+        	}
+    	fileReader.close();
+	s = stringBuffer.toString();
+        } catch (IOException e) {
+	e.printStackTrace();
     }
-}
     
+    return s;
+   }
+	
+	
+ 
 }

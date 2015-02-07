@@ -9,6 +9,7 @@ import nlpstemming.Dictionary.ArrayDictionary;
 import nlpstemming.Marks;
 import nlpstemming.SentenceSlicer;
 import nlpstemming.Stemmer;
+import nlpstemming.Tokenizer;
 import nlpstemming.tools;
 
 /**
@@ -29,28 +30,33 @@ public class ViewOutput extends javax.swing.JFrame {
         try{
             SentenceSlicer sentenceSlicer = new SentenceSlicer(input);
             ArrayList<ArrayList> output = sentenceSlicer.getListSentence();
+            
             StringBuilder sb = new StringBuilder();
             System.out.println("output length " + output.size());
+            
             String[] words = tools.getWordsFromFile();
             ArrayDictionary dictionary = new ArrayDictionary(words);
             Stemmer stemmer    = new Stemmer(dictionary);
+            
             for (int i = 0; i < output.size(); i++) {
                 ArrayList<String> sentenceInput = output.get(i);
-                Marks marks = new Marks(sentenceInput);
-                ArrayList<String> tokenizeList = marks.getSentence();
                 if (i > 0){
                     sb.append("\n\nSentence ").append(i).append(":\n");
                 }else{
                     sb.append("Sentence ").append(i).append(":\n");
                 }
-                for (int j = 0; j < tokenizeList.size(); j++) {
-                    String string = tokenizeList.get(j);
+                for (int j = 0; j < sentenceInput.size(); j++) {
+                    String string = sentenceInput.get(j);
                     if (j==0){
                         sb.append(string);
                     }else{
                         sb.append(" ").append(string);
                     }
                 }
+                Marks marks = new Marks(sentenceInput);
+                ArrayList<String> tokenizeList = marks.getSentence();
+                Tokenizer tokenizer = new Tokenizer(tokenizeList);
+                tokenizeList = tokenizer.getSentence();
                 sb.append("\nSTEMMING WORD : ");
                 for (String string : tokenizeList) {
                     sb.append("\n").append(string).append(" => ").append(stemmer.stem(string));
