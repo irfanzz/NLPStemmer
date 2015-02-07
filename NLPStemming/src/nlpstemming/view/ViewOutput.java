@@ -5,7 +5,10 @@
 package nlpstemming.view;
 
 import java.util.ArrayList;
+import nlpstemming.Dictionary.ArrayDictionary;
 import nlpstemming.SentenceSlicer;
+import nlpstemming.Stemmer;
+import nlpstemming.tools;
 
 /**
  *
@@ -22,29 +25,38 @@ public class ViewOutput extends javax.swing.JFrame {
     
     public ViewOutput(String input) {
         initComponents();
-        
-        SentenceSlicer sentenceSlicer = new SentenceSlicer(input);
-        ArrayList<ArrayList> output = sentenceSlicer.getListSentence();
-        StringBuilder sb = new StringBuilder();
-        System.out.println("output length " + output.size());
-        for (int i = 0; i < output.size(); i++) {
-            ArrayList<String> arrayList = output.get(i);
-            System.out.println("arraylist length " + arrayList.size());
-            if (i > 0){
-                sb.append("\n\nSentence ").append(i).append(":\n");
-            }else{
-                sb.append("Sentence ").append(i).append(":\n");
-            }
-            for (int j = 0; j < arrayList.size(); j++) {
-                String string = arrayList.get(j);
-                if (j==0){
-                    sb.append(string);
+        try{
+            SentenceSlicer sentenceSlicer = new SentenceSlicer(input);
+            ArrayList<ArrayList> output = sentenceSlicer.getListSentence();
+            StringBuilder sb = new StringBuilder();
+            System.out.println("output length " + output.size());
+            String[] words = tools.getWordsFromFile();
+            ArrayDictionary dictionary = new ArrayDictionary(words);
+            Stemmer stemmer    = new Stemmer(dictionary);
+            for (int i = 0; i < output.size(); i++) {
+                ArrayList<String> arrayList = output.get(i);
+                if (i > 0){
+                    sb.append("\n\nSentence ").append(i).append(":\n");
                 }else{
-                    sb.append(" ").append(string);
+                    sb.append("Sentence ").append(i).append(":\n");
+                }
+                for (int j = 0; j < arrayList.size(); j++) {
+                    String string = arrayList.get(j);
+                    if (j==0){
+                        sb.append(string);
+                    }else{
+                        sb.append(" ").append(string);
+                    }
+                }
+                sb.append("\nSTEMMING WORD : ");
+                for (String string : arrayList) {
+                    sb.append("\n").append(string).append(" : ").append(stemmer.stem(string));
                 }
             }
+            jTextArea1.setText(sb.toString());
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        jTextArea1.setText(sb.toString());
     }
 
     /**
@@ -73,14 +85,14 @@ public class ViewOutput extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
