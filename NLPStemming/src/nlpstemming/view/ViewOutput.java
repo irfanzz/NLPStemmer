@@ -53,7 +53,7 @@ public class ViewOutput extends javax.swing.JFrame {
                 }
                 sb.append("\nSTEMMING WORD : ");
                 for (String string : tokenizeList) {
-                    sb.append("\n").append(string).append(" =:= ").append(stemmer.stem(string));
+                    sb.append("\n").append(string).append(" => ").append(stemmer.stem(string));
                 }
             }
             jTextArea1.setText(sb.toString());
