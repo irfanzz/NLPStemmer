@@ -27,10 +27,12 @@ public class Tokenizer {
     public Tokenizer(ArrayList<String> in) throws IOException{
         input = in;
         int i =0;
-        URL location = Tokenizer.class.getProtectionDomain().getCodeSource().getLocation();
+//        URL location = Tokenizer.class.getProtectionDomain().getCodeSource().getLocation();
+//        filename1 = location.toString();
+//        filename1 = filename1.substring(6, filename1.length());
         filename1 = "";
         
-while (i<=input.size()-2)
+        while (i<=input.size()-2)
         {
             current = input.get(i).toLowerCase();
             next = input.get(i+1).toLowerCase();
@@ -54,7 +56,6 @@ while (i<=input.size()-2)
             else if (current.startsWith("w") || current.startsWith("x") || current.startsWith("y")|| current.startsWith("x"))    
                 filename = (filename1+"frasaSZ.txt");
         
-            
             if (filename.length() > 1)
             {    
                 String everything =  readFile(filename); 
@@ -67,20 +68,37 @@ while (i<=input.size()-2)
                     {
                         currentSentence.add(current+next);
                         i = i+1;
+                        //kata terakhir tambahkan
+                        if (i>=input.size()-2)
+                            currentSentence.add(input.get(i+1).toLowerCase());                                                                
                         break;
                     }    
                     else    
                         j = j+1;
                 }
             
-                if (j>=frasa.length-2)          
-                    currentSentence.add(current);
-            }        
-            else
-                currentSentence.add(current);
+                //jika sampai akhir tidak ada di kamus tambahkan 
+                if (j>=frasa.length-2)
+                {
+                    currentSentence.add(current);  
+                    //jika kata terakhir, tambahkan
+                    if (i>=input.size()-2)
+                        currentSentence.add(next);                
+                }          
+            }
             
+            //jika tanda baca, tambahkan
+            else
+            {    
+                currentSentence.add(current);
+                //jika kata terakhir, tambahkan
+                if (i>= input.size()-2)
+                    currentSentence.add(next);                             
+            }
             i=i+1;
-        }//endwhile               
+            
+        }//endwhile
+              
 
         
         

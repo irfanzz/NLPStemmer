@@ -18,7 +18,7 @@ public class SentenceSlicer {
     static final String[] endMark = new String[]{".\"", "!", "?", "?\"", "!\""};
     
     public SentenceSlicer(String in){
-        input = in;
+        input = in.replace("\n", " ");
         arrayInput = input.split(" ");
         listSentence = new ArrayList<>();
         currentSentence = new ArrayList<>();
