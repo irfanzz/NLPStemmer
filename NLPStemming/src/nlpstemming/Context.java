@@ -33,32 +33,26 @@ public class Context  implements ContextInterface {
     protected Boolean processIsStopped = false;
 
     /**
-     * @var \Sastrawi\Stemmer\Context\RemovalInterface[]
      */
     protected ArrayList<RemovalInterface> removals = new ArrayList<>() ;
 
     /**
-     * @var \Sastrawi\Dictionary\DictionaryInterface
      */
     protected DictionaryInterface dictionary;
 
     /**
-     * @var \Sastrawi\Stemmer\Context\Visitor\VisitorProvider
      */
     protected VisitorProvider visitorProvider;
 
     /**
-     * @var \Sastrawi\Stemmer\Context\Visitor\VisitorInterface[]
      */
     protected ArrayList<VisitorInterface> visitors = new ArrayList<>() ;
 
     /**
-     * @var \Sastrawi\Stemmer\Context\Visitor\VisitorInterface[]
      */
     protected  ArrayList<VisitorInterface> suffixVisitors = new ArrayList<>() ;
 
     /**
-     * @var \Sastrawi\Stemmer\Context\Visitor\VisitorInterface[]
      */
     protected  ArrayList<VisitorInterface> prefixVisitors = new ArrayList<>() ;
 
@@ -229,7 +223,6 @@ public class Context  implements ContextInterface {
     /**
      * Check wether the removed part is a suffix
      *
-     * @param  \Sastrawi\Stemmer\Context\RemovalInterface removal
      * @return boolean
      */
     protected boolean isSuffixRemoval(RemovalInterface removal)

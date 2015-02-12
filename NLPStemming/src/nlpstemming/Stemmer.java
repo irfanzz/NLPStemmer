@@ -19,14 +19,11 @@ public class Stemmer implements StemmerInterface
     /**
      * The dictionary containing root words
      *
-     * @var \Sastrawi\Dictionary\DictionaryInterface
      */
     protected DictionaryInterface dictionary;
 
     /**
      * Visitor provider
-     *
-     * @var \Sastrawi\Stemmer\Context\Visitor\VisitorProvider
      */
     protected VisitorProvider visitorProvider;
 
