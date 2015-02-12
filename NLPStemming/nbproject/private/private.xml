@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/D:/Document/TA%20Rien/project/%20NLPStemming/src/nlpstemming/NLPStemming.java</file>
-        <file>file:/D:/Document/TA%20Rien/project/%20NLPStemming/src/nlpstemming/view/ViewInput.java</file>
-        <file>file:/D:/Document/TA%20Rien/project/%20NLPStemming/src/nlpstemming/SentenceSlicer.java</file>
-        <file>file:/D:/Document/TA%20Rien/project/%20NLPStemming/src/nlpstemming/view/ViewOutput.java</file>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/AbstractDisambiguatePrefixRule.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/DontStemShortWord.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/PrefixDisambiguator.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/RemoveDerivationalSuffix.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/RemoveInflectionalParticle.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/VisitorProvider.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/VisitorInterface.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/RemovePlainPrefix.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/RemoveInflectionalPossessivePronoun.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Disambiguator/DisambiguatorComplementer.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Disambiguator/DisambiguatorInterface.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Disambiguator/DisambiguatorPrefixRuleCommon.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/PrecedenceAdjustmentSpecification.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Marks.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/DynamicArray.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/ContextInterface.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Context.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/RemovalInterface.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/SentenceSlicer.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Removal.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/Stemmer.java</file>
+            <file>file:/E:/NLP/stem-nlp-update/NLPStemmer/NLPStemming/src/nlpstemming/view/ViewInput.java</file>
+        </group>
     </open-files>
 </project-private>
