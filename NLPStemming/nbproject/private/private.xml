@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Document/S2/Kuliah/NLP/git/NLPStemmer/NLPStemming/src/nlpstemming/tools.java</file>
-            <file>file:/D:/Document/S2/Kuliah/NLP/git/NLPStemmer/NLPStemming/src/nlpstemming/view/ViewInput.java</file>
+            <file>file:/D:/Document/S2/Kuliah/NLP/git/NLPStemmer/NLPStemming/src/nlpstemming/Context.java</file>
             <file>file:/D:/Document/S2/Kuliah/NLP/git/NLPStemmer/NLPStemming/src/nlpstemming/Stemmer.java</file>
+            <file>file:/D:/Document/S2/Kuliah/NLP/git/NLPStemmer/NLPStemming/src/nlpstemming/Visitor/RemovePlainPrefix.java</file>
+            <file>file:/D:/Document/S2/Kuliah/NLP/git/NLPStemmer/NLPStemming/src/nlpstemming/mainTest.java</file>
         </group>
     </open-files>
 </project-private>

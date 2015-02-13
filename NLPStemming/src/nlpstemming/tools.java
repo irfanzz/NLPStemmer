@@ -6,8 +6,12 @@
 
 package nlpstemming;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -50,16 +54,42 @@ public class tools {
     }   
     
     
-    public static String[] getWordsFromFile() throws FileNotFoundException
+    public static ArrayList<String> getWordsFromFile() throws FileNotFoundException
     {
-        String content = new Scanner(new File("kata-dasar.txt")).useDelimiter("\\Z").next();
-        return content.split("\n");
+        FileInputStream fis = new FileInputStream(new File("kata-dasar.txt"));
+	//Construct BufferedReader from InputStreamReader
+	BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+ 
+        ArrayList<String> list = new ArrayList<>();
+        try{
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                    list.add(line);
+            }
+        }catch(Exception e){
+            
+        }
+        return list;
     }
     
     
-    public static String[] getRulesFromFile() throws FileNotFoundException
+    public static ArrayList<String> getRulesFromFile() throws FileNotFoundException
     {
-        String content = new Scanner(new File("rule-ambiguitas.txt")).useDelimiter("\\Z").next();
-        return content.split("\n");
+//        String content = new Scanner(new File("rule-ambiguitas.txt")).useDelimiter("\\Z").next();
+//        return content.split("\r");
+        FileInputStream fis = new FileInputStream(new File("rule-ambiguitas.txt"));
+	//Construct BufferedReader from InputStreamReader
+	BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+ 
+        ArrayList<String> list = new ArrayList<>();
+        try{
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                    list.add(line);
+            }
+        }catch(Exception e){
+            
+        }
+        return list;
     }
 }

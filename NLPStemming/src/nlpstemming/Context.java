@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package nlpstemming;
 
 import nlpstemming.Dictionary.DictionaryInterface;
@@ -16,8 +15,9 @@ import nlpstemming.Visitor.VisitorProvider;
  *
  * @author Achank89
  */
-public class Context  implements ContextInterface {
-     /**
+public class Context implements ContextInterface {
+
+    /**
      * @var string
      */
     protected String originalWord;
@@ -34,7 +34,7 @@ public class Context  implements ContextInterface {
 
     /**
      */
-    protected ArrayList<RemovalInterface> removals = new ArrayList<>() ;
+    protected ArrayList<RemovalInterface> removals = new ArrayList<>();
 
     /**
      */
@@ -46,47 +46,44 @@ public class Context  implements ContextInterface {
 
     /**
      */
-    protected ArrayList<VisitorInterface> visitors = new ArrayList<>() ;
+    protected ArrayList<VisitorInterface> visitors = new ArrayList<>();
 
     /**
      */
-    protected  ArrayList<VisitorInterface> suffixVisitors = new ArrayList<>() ;
+    protected ArrayList<VisitorInterface> suffixVisitors = new ArrayList<>();
 
     /**
      */
-    protected  ArrayList<VisitorInterface> prefixVisitors = new ArrayList<>() ;
+    protected ArrayList<VisitorInterface> prefixVisitors = new ArrayList<>();
 
     /**
      * @var string
      */
     protected String result;
-    
-    Context( String originalWord, DictionaryInterface dictionary, VisitorProvider visitorProvider){
- 
+
+    Context(String originalWord, DictionaryInterface dictionary, VisitorProvider visitorProvider) {
+
         this.originalWord = originalWord;
-        this.currentWord  = originalWord;
-        this.dictionary   = dictionary;
+        this.currentWord = originalWord;
+        this.dictionary = dictionary;
         this.visitorProvider = visitorProvider;
 
         this.initVisitors();
-    
+
     }
-    
-    
+
     @Override
-    public String getCurrentWord()
-    {
+    public String getCurrentWord() {
         return this.currentWord;
     }
-    
-    void initVisitors(){
-        this.visitors       = this.visitorProvider.getVisitors();
+
+    void initVisitors() {
+        this.visitors = this.visitorProvider.getVisitors();
         this.suffixVisitors = this.visitorProvider.getSuffixVisitors();
         this.prefixVisitors = this.visitorProvider.getPrefixVisitors();
     }
-    
-   void execute()
-    {
+
+    void execute() {
         // step 1 - 5
         this.startStemmingProcess();
 
@@ -97,13 +94,12 @@ public class Context  implements ContextInterface {
             this.result = this.originalWord;
         }
     }
-   
-   void accept(VisitorInterface visitor){
-       visitor.visit(this);
-   }
-   
-    protected String acceptVisitors( ArrayList<VisitorInterface> visitors)
-    {
+
+    void accept(VisitorInterface visitor) {
+        visitor.visit(this);
+    }
+
+    protected String acceptVisitors(ArrayList<VisitorInterface> visitors) {
         for (VisitorInterface visitor : visitors) {
             this.accept(visitor);
 
@@ -118,14 +114,11 @@ public class Context  implements ContextInterface {
         return "";
     }
 
-   
-    protected String acceptPrefixVisitors( ArrayList<VisitorInterface>   visitors)
-    {
+    protected String acceptPrefixVisitors(ArrayList<VisitorInterface> visitors) {
         int removalCount = this.removals.size();
-          for (VisitorInterface visitor : visitors) {
-           this.accept(visitor);
+        for (VisitorInterface visitor : visitors) {
+            this.accept(visitor);
 
-           
             if (this.getDictionary().contains(this.getCurrentWord())) {
                 return this.getCurrentWord();
             }
@@ -134,15 +127,15 @@ public class Context  implements ContextInterface {
                 return this.getCurrentWord();
             }
 
-            if ( this.removals.size() > removalCount) {
+            if (this.removals.size() > removalCount) {
                 return null;
             }
         }
-        
+
         return "";
     }
-    protected void removePrefixes()
-    {
+
+    protected void removePrefixes() {
         for (int i = 0; i < 3; i++) {
             this.acceptPrefixVisitors(this.prefixVisitors);
             if (this.dictionary.contains(this.getCurrentWord())) {
@@ -150,18 +143,15 @@ public class Context  implements ContextInterface {
             }
         }
     }
-    
-    
-    protected void removeSuffixes()
-    {
+
+    protected void removeSuffixes() {
         this.acceptVisitors(this.suffixVisitors);
     }
 
     /**
      * @return void
      */
-    protected void startStemmingProcess()
-    {
+    protected void startStemmingProcess() {
         // step 1
         if (this.dictionary.contains(this.getCurrentWord())) {
             return;
@@ -173,7 +163,7 @@ public class Context  implements ContextInterface {
             return;
         }
 
-       PrecedenceAdjustmentSpecification csPrecedenceAdjustmentSpecification = new PrecedenceAdjustmentSpecification();
+        PrecedenceAdjustmentSpecification csPrecedenceAdjustmentSpecification = new PrecedenceAdjustmentSpecification();
 
         /*
          * Confix Stripping
@@ -194,7 +184,7 @@ public class Context  implements ContextInterface {
                 // if the trial is failed, restore the original word
                 // and continue to normal rule precedence (suffix first, prefix afterwards)
                 this.setCurrentWord(this.originalWord);
-                this.removals = new ArrayList<>() ;
+                this.removals = new ArrayList<>();
             }
         }
 
@@ -214,9 +204,7 @@ public class Context  implements ContextInterface {
         this.loopPengembalianAkhiran();
     }
 
-    
-    public String getResult()
-    {
+    public String getResult() {
         return this.result;
     }
 
@@ -225,20 +213,19 @@ public class Context  implements ContextInterface {
      *
      * @return boolean
      */
-    protected boolean isSuffixRemoval(RemovalInterface removal)
-    {
-        return removal.getAffixType().equalsIgnoreCase("DS") 
-            || removal.getAffixType().equalsIgnoreCase("PP") 
-            || removal.getAffixType().equalsIgnoreCase("P")  ;
+    protected boolean isSuffixRemoval(RemovalInterface removal) {
+        return removal.getAffixType().equalsIgnoreCase("DS")
+                || removal.getAffixType().equalsIgnoreCase("PP")
+                || removal.getAffixType().equalsIgnoreCase("P");
     }
+
     /**
      * Restore prefix to proceed with ECS loop pengembalian akhiran
      *
      * @return void
      */
-    public void restorePrefix()
-    {
-        for ( RemovalInterface removal : this.removals ) {
+    public void restorePrefix() {
+        for (RemovalInterface removal : this.removals) {
             if (removal.getAffixType().equalsIgnoreCase("DP")) {
                 // return the word before precoding (the subject of first prefix removal)
                 this.setCurrentWord(removal.getSubject());
@@ -246,34 +233,34 @@ public class Context  implements ContextInterface {
             }
         }
 
-        for(int i=0; i< this.removals.size(); i++){
+        for (int i = 0; i < this.removals.size(); i++) {
             RemovalInterface removal = removals.get(i);
             if (removal.getAffixType().equalsIgnoreCase("DP")) {
-        
+
                 this.removals.remove(i);
             }
         }
     }
+
     /**
      * ECS Loop Pengembalian Akhiran
      */
-    public void loopPengembalianAkhiran()
-    {
+    public void loopPengembalianAkhiran() {
         // restore prefix to form [DP+[DP+[DP]]] + Root word
         this.restorePrefix();
 
-       ArrayList<RemovalInterface> removals = this.removals;
-       
-       ArrayList<RemovalInterface> reversedRemovals = new ArrayList<RemovalInterface>(removals);
-       Collections.reverse(reversedRemovals);
+        ArrayList<RemovalInterface> removals = this.removals;
+
+        ArrayList<RemovalInterface> reversedRemovals = new ArrayList<RemovalInterface>(removals);
+        Collections.reverse(reversedRemovals);
         String currentWord = this.getCurrentWord();
 
-        for ( RemovalInterface removal : reversedRemovals ) {
+        for (RemovalInterface removal : reversedRemovals) {
             if (!this.isSuffixRemoval(removal)) {
                 continue;
             }
 
-            if (removal.getRemovedPart().equalsIgnoreCase("kan") ) {
+            if (removal.getRemovedPart().equalsIgnoreCase("kan")) {
                 this.setCurrentWord(removal.getResult() + 'k');
 
                 // step 4, 5
@@ -297,30 +284,30 @@ public class Context  implements ContextInterface {
             this.setCurrentWord(currentWord);
         }
     }
-    
+
     @Override
     public String getOriginalWord() {
-            return this.originalWord;
+        return this.originalWord;
     }
 
     @Override
     public void setCurrentWord(String word) {
-         this.currentWord = word;
+        this.currentWord = word;
     }
 
     @Override
     public DictionaryInterface getDictionary() {
-             return this.dictionary;
+        return this.dictionary;
     }
 
     @Override
     public void stopProcess() {
-           this.processIsStopped = true;
+        this.processIsStopped = true;
     }
 
     @Override
     public boolean processIsStopped() {
-         return this.processIsStopped;
+        return this.processIsStopped;
     }
 
     @Override
@@ -330,6 +317,6 @@ public class Context  implements ContextInterface {
 
     @Override
     public ArrayList<RemovalInterface> getRemovals() {
-         return this.removals;
+        return this.removals;
     }
 }

@@ -93,6 +93,7 @@ public class Stemmer implements StemmerInterface {
 
         Context context = new Context(word, this.dictionary, this.visitorProvider);
         context.execute();
+        System.out.println("result : " + context.getResult());
 
         return context.getResult();
 

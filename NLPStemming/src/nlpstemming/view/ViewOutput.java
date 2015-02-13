@@ -34,7 +34,7 @@ public class ViewOutput extends javax.swing.JFrame {
             StringBuilder sb = new StringBuilder();
             System.out.println("output length " + output.size());
             
-            String[] words = tools.getWordsFromFile();
+            ArrayList<String> words = tools.getWordsFromFile();
             ArrayDictionary dictionary = new ArrayDictionary(words);
             Stemmer stemmer    = new Stemmer(dictionary);
             

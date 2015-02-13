@@ -18,8 +18,7 @@ public class RemoveInflectionalParticle implements VisitorInterface
     public void visit(ContextInterface context)
     {
         String result = this.remove(context.getCurrentWord());
-
-        if (result != context.getCurrentWord()) {
+        if (result != null && !result.equals(context.getCurrentWord())) {
             String removedPart = context.getCurrentWord().replaceFirst(result, "");
            
 

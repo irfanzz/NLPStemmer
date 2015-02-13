@@ -91,7 +91,7 @@ public class VisitorProvider
         
         
         try {
-            String[] ambiguitaslist = tools.getRulesFromFile();
+            ArrayList<String> ambiguitaslist = tools.getRulesFromFile();
             
             String pattern_match = "[ABCDEPQVW]";
             

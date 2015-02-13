@@ -8,7 +8,6 @@ package nlpstemming.Dictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  *
@@ -20,7 +19,7 @@ public class ArrayDictionary implements DictionaryInterface
      * @var string[]
      */
 
-    protected HashMap<String, Integer> words = new HashMap<>();
+    protected ArrayList<String> words = new ArrayList<>();
             
     
     public ArrayDictionary(ArrayList<String> words)
@@ -43,7 +42,12 @@ public class ArrayDictionary implements DictionaryInterface
     @Override
     public boolean contains(String word)
     {
-        return words.containsKey(word);
+        for (String word1 : words) {
+            if (word1.equals(word)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -78,6 +82,10 @@ public class ArrayDictionary implements DictionaryInterface
             return;
         }
 
-        this.words.put(word, 1);
+        this.words.add(word);
+    }
+
+    public ArrayList<String> getWords() {
+        return words;
     }
 }
