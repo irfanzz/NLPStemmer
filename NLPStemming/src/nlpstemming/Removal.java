@@ -15,7 +15,6 @@ import nlpstemming.Visitor.VisitorInterface;
 public class Removal implements RemovalInterface
 {
     /**
-     * @var \Sastrawi\Stemmer\Context\Visitor\VisitorInterface
      */
     protected VisitorInterface visitor;
 
@@ -40,11 +39,11 @@ public class Removal implements RemovalInterface
     protected String  affixType;
 
     /**
-     * @param \Sastrawi\Stemmer\Context\Visitor\VisitorInterface visitor
-     * @param string                                             subject
-     * @param string                                             result
-     * @param string                                             removedPart
-     * @param string                                             affixType
+     * @param visitor
+     * @param affixType
+     * @param result
+     * @param removedPart
+     * @param subject
      */
     public Removal(
         VisitorInterface visitor,

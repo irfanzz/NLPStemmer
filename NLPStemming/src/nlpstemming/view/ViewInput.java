@@ -49,7 +49,7 @@ public class ViewInput extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("filename");
 
         jTextArea1.setColumns(100);
         jTextArea1.setLineWrap(true);

@@ -31,7 +31,6 @@ public interface ContextInterface {
     public String getCurrentWord();
 
     /**
-     * @return \Sastrawi\Dictionary\DictionaryInterface
      */
     public DictionaryInterface getDictionary();
 

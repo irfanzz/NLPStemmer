@@ -38,7 +38,6 @@ public class SentenceSlicer {
                         processEndSentence(word, i);
                     }
                 }else{
-                    System.out.println("else");
                     processEndSentence(word, i);
                 }
             }else{
