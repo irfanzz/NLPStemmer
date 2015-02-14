@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class SentenceSlicer {
     String input;
     String[] arrayInput;
-    ArrayList<ArrayList> listSentence;
+    ArrayList<ArrayList<String>> listSentence;
     ArrayList<String> currentSentence;
     static final String[] endMark = new String[]{".\"", "!", "?", "?\"", "!\""};
     
@@ -46,7 +46,7 @@ public class SentenceSlicer {
         }
     }
 
-    public ArrayList<ArrayList> getListSentence() {
+    public ArrayList<ArrayList<String>> getListSentence() {
         return listSentence;
     }
     

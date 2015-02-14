@@ -4,7 +4,12 @@
  */
 package nlpstemming.view;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.AbstractListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import nlpstemming.Dictionary.ArrayDictionary;
 import nlpstemming.Marks;
 import nlpstemming.SentenceSlicer;
@@ -18,54 +23,105 @@ import nlpstemming.tools;
  */
 public class ViewOutput extends javax.swing.JFrame {
 
+    private ArrayList<ArrayList<String>> listWordOriginal;
+    private ArrayList<ArrayList<String>> listStemWord;
+    private DefaultTableModel tableAdapter;
+    private String[] tableHeader = new String[]{
+                        "Kata Awal", "Kata Stem"
+                    };
+    private AbstractListModel<String> adapterList = new AbstractListModel<String>() {
+
+        @Override
+        public int getSize() {
+            return listWordOriginal.size();
+        }
+
+        @Override
+        public String getElementAt(int index) {
+            return getSentence(listWordOriginal.get(index));
+        }
+    };
+    private ListSelectionListener listSelect = new ListSelectionListener() {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (jList1.getSelectedIndex() >= 0){
+                int index = jList1.getSelectedIndex();
+                setTableItem(listWordOriginal.get(index), listStemWord.get(index));
+            }
+        }
+    };
+
     /**
      * Creates new form ViewOutput
      */
     public ViewOutput() {
         initComponents();
+        getContentPane().setBackground(Color.decode("#43609C"));
     }
-    
+
     public ViewOutput(String input) {
         initComponents();
-        try{
+        jList1.addListSelectionListener(listSelect);
+        getContentPane().setBackground(Color.decode("#43609C"));
+        try {
+            listWordOriginal = new ArrayList<>();
             SentenceSlicer sentenceSlicer = new SentenceSlicer(input);
-            ArrayList<ArrayList> output = sentenceSlicer.getListSentence();
-            
-            StringBuilder sb = new StringBuilder();
-            System.out.println("output length " + output.size());
-            
+            ArrayList<ArrayList<String>> listAwal = sentenceSlicer.getListSentence();
+            listStemWord = new ArrayList<>(listWordOriginal.size());
+
             ArrayList<String> words = tools.getWordsFromFile();
             ArrayDictionary dictionary = new ArrayDictionary(words);
-            Stemmer stemmer    = new Stemmer(dictionary);
-            
-            for (int i = 0; i < output.size(); i++) {
-                ArrayList<String> sentenceInput = output.get(i);
-                if (i > 0){
-                    sb.append("\n\nSentence ").append(i).append(":\n");
-                }else{
-                    sb.append("Sentence ").append(i).append(":\n");
-                }
-                for (int j = 0; j < sentenceInput.size(); j++) {
-                    String string = sentenceInput.get(j);
-                    if (j==0){
-                        sb.append(string);
-                    }else{
-                        sb.append(" ").append(string);
-                    }
-                }
+            Stemmer stemmer = new Stemmer(dictionary);
+
+            for (int i = 0; i < listAwal.size(); i++) {
+                ArrayList<String> sentenceInput = listAwal.get(i);
+                ArrayList<String> wordStem = new ArrayList<>(sentenceInput.size());
+                listStemWord.add(wordStem);
+
                 Marks marks = new Marks(sentenceInput);
                 ArrayList<String> tokenizeList = marks.getSentence();
                 Tokenizer tokenizer = new Tokenizer(tokenizeList);
                 tokenizeList = tokenizer.getSentence();
-                sb.append("\nSTEMMING WORD : ");
+                listWordOriginal.add(tokenizeList);
                 for (String string : tokenizeList) {
-                    sb.append("\n").append(string).append(" => ").append(stemmer.stem(string));
+                    wordStem.add(stemmer.stem(string));
                 }
             }
-            jTextArea1.setText(sb.toString());
-        }catch(Exception e){
+
+            jList1.setModel(adapterList);
+            tableAdapter = new javax.swing.table.DefaultTableModel(
+                    new Object[][]{
+                        {null, null},
+                    },tableHeader);
+            jTable1.setModel(tableAdapter);
+            if (listWordOriginal.size()>0){
+                setTableItem(listWordOriginal.get(0), listStemWord.get(0));
+                jList1.setSelectedIndex(0);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String getSentence(ArrayList<String> listWord) {
+        String result = null;
+        for (String word : listWord) {
+            if (result == null) {
+                result = word;
+            } else {
+                result += " " + word;
+            }
+        }
+        return result;
+    }
+
+    private void setTableItem(ArrayList<String> originalWord, ArrayList<String> stemWord){
+        String[][] items = new String[originalWord.size()][2];
+        for (int i = 0; i < items.length; i++) {
+            items[i] = new String[]{originalWord.get(i), stemWord.get(i)};
+        }
+        tableAdapter.setDataVector(items, tableHeader);
     }
 
     /**
@@ -77,16 +133,33 @@ public class ViewOutput extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(jTextArea1);
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(jList1);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,14 +167,20 @@ public class ViewOutput extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 3, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -143,7 +222,9 @@ public class ViewOutput extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JList jList1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
